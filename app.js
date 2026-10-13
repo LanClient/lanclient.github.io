@@ -69,4 +69,35 @@
   } else if (!isWindows) {
     if (note) note.textContent = 'Версия 1.2 · Windows 10/11 (.exe) или Android (.apk)';
   }
+
+  // --- Скачивание только после входа/регистрации ---
+  var AUTH = window.LanClientAuth;
+
+  function isLocked() {
+    return !!(AUTH && AUTH.configured && !AUTH.loggedIn);
+  }
+
+  function renderGate() {
+    var locked = isLocked();
+    document.querySelectorAll('.js-gate').forEach(function (a) {
+      a.classList.toggle('locked', locked);
+      if (locked) a.setAttribute('aria-disabled', 'true');
+      else a.removeAttribute('aria-disabled');
+    });
+    var lockNote = document.getElementById('dlLock');
+    if (lockNote) lockNote.hidden = !locked;
+  }
+
+  // Перехватываем клик до перехода по ссылке
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('.js-gate') : null;
+    if (!a) return;
+    if (!isLocked()) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (AUTH && AUTH.openModal) AUTH.openModal('download');
+  }, true);
+
+  if (AUTH) AUTH.onChange = renderGate;
+  renderGate();
 })();

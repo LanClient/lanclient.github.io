@@ -328,6 +328,10 @@ p { margin: 0; }
 .dl-alt { margin: 12px 0 0; color: var(--muted); font-size: 13.5px; }
 .dl-alt a { color: var(--accent-hi); text-decoration: none; border-bottom: 1px dashed rgba(154,172,255,.45); }
 .dl-alt a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.dl-lock { margin: 12px 0 0; color: var(--accent-hi); font-size: 13.5px; }
+.dl-lock[hidden] { display: none; }
+.js-gate.locked { cursor: pointer; }
+.js-gate.locked .ic { opacity: .85; }
 
 /* ---------- Footer ---------- */
 .footer { border-top: 1px solid var(--border); background: var(--bg-2); padding: 52px 0 30px; }
@@ -376,4 +380,57 @@ p { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
+}
+
+/* ---------- Авторизация ---------- */
+.modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; }
+.modal[hidden] { display: none; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(6, 7, 12, .74); backdrop-filter: blur(5px); }
+.modal-card {
+  position: relative; width: 100%; max-width: 420px; max-height: calc(100vh - 40px); overflow-y: auto;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 30px 28px 26px; box-shadow: 0 30px 90px rgba(0, 0, 0, .6);
+  animation: authpop .18s ease;
+}
+@keyframes authpop { from { transform: translateY(12px); opacity: .5; } to { transform: none; opacity: 1; } }
+.modal-close {
+  position: absolute; top: 12px; right: 12px; width: 34px; height: 34px;
+  border: 0; background: transparent; color: var(--muted); font-size: 24px; line-height: 1;
+  cursor: pointer; border-radius: 9px;
+}
+.modal-close:hover { background: var(--ghost); color: var(--text); }
+.auth-tabs { display: flex; gap: 6px; background: var(--input); border: 1px solid var(--border); border-radius: 12px; padding: 5px; margin-bottom: 22px; }
+.auth-tab { flex: 1; border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 600; font-size: 15px; padding: 10px; border-radius: 9px; cursor: pointer; }
+.auth-tab.active { background: var(--ghost-hi); color: var(--text); }
+.auth-pane { display: grid; gap: 14px; }
+.auth-pane[hidden] { display: none; }
+.auth-field { display: grid; gap: 6px; }
+.auth-field > span { font-size: 13px; color: var(--muted); }
+.auth-field input {
+  width: 100%; box-sizing: border-box; background: var(--input); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px; color: var(--text); font: inherit; font-size: 15px; outline: none;
+}
+.auth-field input:focus { border-color: var(--accent-lo); box-shadow: 0 0 0 3px rgba(133, 156, 255, .14); }
+.auth-pane .btn { width: 100%; justify-content: center; }
+.auth-link { background: none; border: 0; color: var(--muted); font: inherit; font-size: 13px; cursor: pointer; text-decoration: underline; }
+.auth-link:hover { color: var(--accent-hi); }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+.auth-divider::before, .auth-divider::after { content: ""; height: 1px; flex: 1; background: var(--border); }
+.auth-google { width: 100%; justify-content: center; gap: 10px; }
+.auth-google svg { width: 18px; height: 18px; flex: 0 0 auto; }
+.auth-msg { margin-top: 16px; font-size: 13.5px; line-height: 1.45; min-height: 19px; }
+.auth-msg.err { color: #FF8F8F; }
+.auth-msg.ok { color: #7DE0A6; }
+body.modal-open { overflow: hidden; }
+
+.user-chip { display: flex; align-items: center; gap: 8px; background: var(--ghost); border: 1px solid var(--border); border-radius: 999px; padding: 4px 6px 4px 10px; }
+.user-chip[hidden] { display: none; }
+.user-avatar { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+.user-avatar[hidden] { display: none; }
+.user-name { font-size: 14px; font-weight: 600; color: var(--text); max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.user-logout { border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 13px; cursor: pointer; padding: 4px 9px; border-radius: 999px; }
+.user-logout:hover { background: var(--ghost-hi); color: var(--text); }
+@media (max-width: 680px) {
+  .user-name { max-width: 84px; }
+  .nav-actions { gap: 8px; }
 }

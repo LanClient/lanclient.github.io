@@ -36,7 +36,13 @@
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-actions">
-      <a class="btn btn-primary btn-sm js-download" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
+      <button class="btn btn-ghost btn-sm" id="authOpen" type="button">Войти</button>
+      <div class="user-chip" id="userChip" hidden>
+        <img class="user-avatar" id="userAvatar" alt="">
+        <span class="user-name" id="userName"></span>
+        <button class="user-logout" id="authLogout" type="button">Выйти</button>
+      </div>
+      <a class="btn btn-primary btn-sm js-download js-gate" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
          data-exe="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" data-apk="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk" download>
         <svg viewBox="0 0 24 24" class="ic"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
         <span class="dl-text">Скачать</span>
@@ -66,7 +72,7 @@
           Установка в один клик — Java, Fabric и игра поставятся сами.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary js-download" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
+          <a class="btn btn-primary js-download js-gate" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
              data-exe="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" data-apk="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk"
              data-text-win="Скачать для Windows" data-text-android="Скачать для Android" download>
             <svg viewBox="0 0 24 24" class="ic"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
@@ -310,7 +316,7 @@
         </div>
       </div>
       <div class="android-cta reveal">
-        <a class="btn btn-primary btn-lg" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk" download>
+        <a class="btn btn-primary btn-lg js-gate" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk" download>
           <svg viewBox="0 0 24 24" class="ic"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
           Скачать APK для Android
         </a>
@@ -326,7 +332,7 @@
         <span class="eyebrow">Требования</span>
         <h2>Системные требования</h2>
         <p>Клиент рассчитан на обычные ПК — оптимизация и настройка памяти встроены в лаунчер.</p>
-        <a class="btn btn-primary js-download" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
+        <a class="btn btn-primary js-download js-gate" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
            data-exe="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" data-apk="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk" download>
           <svg viewBox="0 0 24 24" class="ic"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
           <span class="dl-text">Скачать бесплатно</span>
@@ -394,17 +400,18 @@
         <img src="assets/icon.png" alt="" class="dl-logo">
         <h2>Готов начать?</h2>
         <p>Скачай LanClient и зайди в игру через пару минут.</p>
-        <a class="btn btn-primary btn-lg js-download" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
+        <a class="btn btn-primary btn-lg js-download js-gate" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
            data-exe="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" data-apk="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk"
            data-text-win="Скачать LanClient Setup" data-text-android="Скачать LanClient APK" download>
           <svg viewBox="0 0 24 24" class="ic"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
           <span class="dl-text">Скачать LanClient Setup</span>
         </a>
         <div class="dl-note" id="dl-note">Версия 1.2 · Windows 10/11 · ~75 МБ</div>
+        <p class="dl-lock" id="dlLock">Скачивание доступно после входа или регистрации</p>
         <p class="dl-alt">
           Другая система?
-          <a href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" download>Windows (.exe)</a> ·
-          <a href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk" download>Android (.apk)</a>
+          <a class="js-gate" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" download>Windows (.exe)</a> ·
+          <a class="js-gate" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk" download>Android (.apk)</a>
         </p>
       </div>
     </div>
@@ -436,6 +443,61 @@
   </div>
 </footer>
 
+<!-- Модальное окно авторизации -->
+<div class="modal" id="authModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Аккаунт LanClient">
+    <button class="modal-close" type="button" data-close aria-label="Закрыть">&times;</button>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" type="button" data-tab="login">Вход</button>
+      <button class="auth-tab" type="button" data-tab="register">Регистрация</button>
+    </div>
+
+    <div class="auth-pane" data-pane="login">
+      <label class="auth-field">
+        <span>Email</span>
+        <input type="email" id="loginEmail" autocomplete="email" placeholder="you@example.com">
+      </label>
+      <label class="auth-field">
+        <span>Пароль</span>
+        <input type="password" id="loginPass" autocomplete="current-password" placeholder="Ваш пароль">
+      </label>
+      <button class="btn btn-primary" type="button" id="btnLogin">Войти</button>
+      <button class="auth-link" type="button" id="btnForgot">Забыли пароль?</button>
+    </div>
+
+    <div class="auth-pane" data-pane="register" hidden>
+      <label class="auth-field">
+        <span>Ник (для Minecraft)</span>
+        <input type="text" id="regNick" maxlength="16" autocomplete="username" placeholder="Steve_123">
+      </label>
+      <label class="auth-field">
+        <span>Email</span>
+        <input type="email" id="regEmail" autocomplete="email" placeholder="you@example.com">
+      </label>
+      <label class="auth-field">
+        <span>Пароль</span>
+        <input type="password" id="regPass" autocomplete="new-password" placeholder="Минимум 6 символов">
+      </label>
+      <button class="btn btn-primary" type="button" id="btnRegister">Создать аккаунт</button>
+    </div>
+
+    <div class="auth-divider"><span>или</span></div>
+
+    <button class="btn btn-ghost auth-google" type="button" id="btnGoogle">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.2 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.5c-.5 2.9-2.2 5.4-4.6 7l7.1 5.5C43.1 37.3 46.1 31.5 46.1 24.5z"/><path fill="#FBBC05" d="M10.4 28.7c-.5-1.4-.8-2.9-.8-4.7s.3-3.3.8-4.7l-7.8-6.1C1 16.4 0 20.1 0 24s1 7.6 2.6 10.8l7.8-6.1z"/><path fill="#34A853" d="M24 48c6.2 0 11.5-2.1 15.4-5.6l-7.1-5.5c-2 1.4-4.6 2.2-8.3 2.2-6.3 0-11.7-3.7-13.6-8.8l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+      Продолжить с Google
+    </button>
+
+    <div class="auth-msg" id="authMsg"></div>
+  </div>
+</div>
+
+<script src="firebase-config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="auth.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

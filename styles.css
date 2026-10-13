@@ -285,6 +285,11 @@ p { margin: 0; }
 .step p { color: var(--muted); font-size: 15px; }
 .step p b { color: var(--text); }
 
+/* Android */
+.steps.steps-4 { grid-template-columns: repeat(4, 1fr); }
+.android-cta { margin-top: 40px; text-align: center; }
+.android-cta .dl-note { margin-top: 16px; }
+
 /* ---------- Requirements ---------- */
 .req-wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
 .req-copy .eyebrow { margin-bottom: 12px; }
@@ -344,6 +349,7 @@ p { margin: 0; }
   .window { transform: none; }
   .cards { grid-template-columns: repeat(2, 1fr); }
   .gallery { grid-template-columns: 1fr; }
+  .steps.steps-4 { grid-template-columns: repeat(2, 1fr); }
   .shot:first-child { grid-row: auto; }
   .shot:first-child .shot-frame { min-height: 300px; }
   .req-wrap { grid-template-columns: 1fr; gap: 34px; }
@@ -361,6 +367,7 @@ p { margin: 0; }
   .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 26px; }
   .cards { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
+  .steps.steps-4 { grid-template-columns: 1fr; }
   .section { padding: 66px 0; }
   .hero { padding: 52px 0 54px; }
   .dl-card { padding: 48px 22px; }

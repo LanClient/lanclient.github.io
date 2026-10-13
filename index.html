@@ -8,13 +8,13 @@
 <meta name="keywords" content="LanClient, Minecraft, 1.21.4, Fabric, клиент, читы, косметика, YouHub, лаунчер">
 <meta name="author" content="LanClient">
 <meta name="theme-color" content="#0E0F15">
-<link rel="canonical" href="https://lanclient.github.io/">
+<link rel="canonical" href="https://lanclient.ru/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LanClient">
 <meta property="og:title" content="LanClient — клиент для Minecraft 1.21.4">
 <meta property="og:description" content="Модули, косметика, встроенный браузер и музыкальный виджет. Установка в один клик.">
-<meta property="og:url" content="https://lanclient.github.io/">
-<meta property="og:image" content="https://lanclient.github.io/assets/icon.png">
+<meta property="og:url" content="https://lanclient.ru/">
+<meta property="og:image" content="https://lanclient.ru/assets/icon.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/icon.png">
 <link rel="alternate icon" href="assets/app.ico">
@@ -35,9 +35,10 @@
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-actions">
-      <a class="btn btn-primary btn-sm" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" download>
+      <a class="btn btn-primary btn-sm js-download" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
+         data-exe="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" data-apk="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk" download>
         <svg viewBox="0 0 24 24" class="ic"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
-        Скачать
+        <span class="dl-text">Скачать</span>
       </a>
       <button class="burger" id="burger" aria-label="Меню">
         <span></span><span></span><span></span>
@@ -64,14 +65,16 @@
           Установка в один клик — Java, Fabric и игра поставятся сами.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" download>
+          <a class="btn btn-primary js-download" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
+             data-exe="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" data-apk="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk"
+             data-text-win="Скачать для Windows" data-text-android="Скачать для Android" download>
             <svg viewBox="0 0 24 24" class="ic"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
-            Скачать для Windows
+            <span class="dl-text">Скачать для Windows</span>
           </a>
           <a class="btn btn-ghost" href="#features">Возможности</a>
         </div>
         <div class="hero-meta">
-          <span>Версия 1.2</span><i></i><span>~75 МБ</span><i></i><span>Windows 10/11</span><i></i><span>Бесплатно</span>
+          <span>Версия 1.2</span><i></i><span id="hero-size">~75 МБ</span><i></i><span id="hero-os">Windows 10/11</span><i></i><span>Бесплатно</span>
         </div>
       </div>
 
@@ -282,9 +285,10 @@
         <span class="eyebrow">Требования</span>
         <h2>Системные требования</h2>
         <p>Клиент рассчитан на обычные ПК — оптимизация и настройка памяти встроены в лаунчер.</p>
-        <a class="btn btn-primary" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" download>
+        <a class="btn btn-primary js-download" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
+           data-exe="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" data-apk="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk" download>
           <svg viewBox="0 0 24 24" class="ic"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
-          Скачать бесплатно
+          <span class="dl-text">Скачать бесплатно</span>
         </a>
       </div>
       <ul class="req-list reveal">
@@ -345,11 +349,18 @@
         <img src="assets/icon.png" alt="" class="dl-logo">
         <h2>Готов начать?</h2>
         <p>Скачай LanClient и зайди в игру через пару минут.</p>
-        <a class="btn btn-primary btn-lg" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" download>
+        <a class="btn btn-primary btn-lg js-download" href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe"
+           data-exe="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" data-apk="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk"
+           data-text-win="Скачать LanClient Setup" data-text-android="Скачать LanClient APK" download>
           <svg viewBox="0 0 24 24" class="ic"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
-          Скачать LanClient Setup
+          <span class="dl-text">Скачать LanClient Setup</span>
         </a>
-        <div class="dl-note">Версия 1.2 · Windows 10/11 · ~75 МБ</div>
+        <div class="dl-note" id="dl-note">Версия 1.2 · Windows 10/11 · ~75 МБ</div>
+        <p class="dl-alt">
+          Другая система?
+          <a href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Setup-1.2.exe" download>Windows (.exe)</a> ·
+          <a href="https://github.com/lanclient/lanclient.github.io/releases/download/v1.2/LanClient-Android-1.2.apk" download>Android (.apk)</a>
+        </p>
       </div>
     </div>
   </section>

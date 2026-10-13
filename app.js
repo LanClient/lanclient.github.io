@@ -42,4 +42,31 @@
   } else {
     items.forEach(function (el) { el.classList.add('in'); });
   }
+
+  // --- Автоопределение системы: Windows -> .exe, Android -> .apk ---
+  var ua = navigator.userAgent || '';
+  var pf = navigator.platform || '';
+  var isAndroid = /android/i.test(ua) || /android/i.test(pf);
+  var isWindows = /win/i.test(pf) || /windows/i.test(ua);
+
+  document.querySelectorAll('.js-download').forEach(function (a) {
+    var url = isAndroid ? a.getAttribute('data-apk') : a.getAttribute('data-exe');
+    if (url) a.setAttribute('href', url);
+    var text = a.querySelector('.dl-text');
+    if (text) {
+      var t = isAndroid ? a.getAttribute('data-text-android') : a.getAttribute('data-text-win');
+      if (t) text.textContent = t;
+    }
+  });
+
+  var note = document.getElementById('dl-note');
+  var heroOs = document.getElementById('hero-os');
+  var heroSize = document.getElementById('hero-size');
+  if (isAndroid) {
+    if (note) note.textContent = 'Версия 1.2 · Android 7.0+ · ~17 МБ (APK)';
+    if (heroOs) heroOs.textContent = 'Android 7.0+';
+    if (heroSize) heroSize.textContent = '~17 МБ';
+  } else if (!isWindows) {
+    if (note) note.textContent = 'Версия 1.2 · Windows 10/11 (.exe) или Android (.apk)';
+  }
 })();

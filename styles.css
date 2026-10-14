@@ -55,6 +55,9 @@ p { margin: 0; }
 }
 
 /* ---------- Buttons ---------- */
+/* [hidden] должно побеждать display у .btn и прочих */
+[hidden] { display: none !important; }
+
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
   padding: 13px 22px; border-radius: 12px;

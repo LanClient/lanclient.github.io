@@ -13,11 +13,21 @@
   var userNameEl = document.getElementById('userName');
   var userAvatar = document.getElementById('userAvatar');
   var logoutBtn  = document.getElementById('authLogout');
+  var profileBtn = document.getElementById('profileBtn');
+  var profileModalEl = document.getElementById('profileModal');
   var nickModal  = document.getElementById('nickModal');
   var nickBtn    = document.getElementById('nickChange');
   var nickInput  = document.getElementById('nickInput');
   var nickSave   = document.getElementById('nickSave');
   var nickMsgEl  = document.getElementById('nickMsg');
+  var deviceHwid = document.getElementById('deviceHwid');
+  var premiumStatus = document.getElementById('premiumStatus');
+  var premiumBuy = document.getElementById('premiumBuy');
+  var premiumHint = document.getElementById('premiumHint');
+  var RTDB_CONFIG = null;
+
+  // Адрес Realtime Database проекта lanclient-26e2d (публичный, защита — правилами).
+  var RTDB_BASE = 'https://lanclient-26e2d-default-rtdb.firebaseio.com';
 
   var auth = null;
 
@@ -51,6 +61,64 @@
     modal.hidden = true;
     document.body.classList.remove('modal-open');
     showMsg('');
+  }
+
+  function openProfile() {
+    if (!profileModalEl) return;
+    profileModalEl.hidden = false;
+    document.body.classList.add('modal-open');
+    var u = auth && auth.currentUser ? auth.currentUser : null;
+    renderProfile(u);
+  }
+  function closeProfile() {
+    if (!profileModalEl) return;
+    profileModalEl.hidden = true;
+    document.body.classList.remove('modal-open');
+  }
+  async function renderProfile(u) {
+    try {
+      var pUid = $('pUid'), pHwid=$('pHwid'), pHwidState=$('pHwidState'), pPrem=$('pPrem'), pPremInfo=$('pPremInfo');
+      if (u) {
+        if (pUid) pUid.textContent = u.uid;
+        if (pHwid) pHwid.textContent = 'Загружаю…';
+        if (pHwidState) pHwidState.textContent = '';
+        if (pPrem) pPrem.textContent = 'Проверяю…';
+        if (pPremInfo) pPremInfo.textContent = '';
+        var token = await u.getIdToken();
+        try {
+          var r = await fetch(RTDB_BASE + '/users/' + u.uid + '.json?auth=' + encodeURIComponent(token));
+          var ud = r && r.ok ? await r.json() : null;
+          var hw = ud && ud.hwid ? String(ud.hwid) : '';
+          if (pHwid) pHwid.textContent = hw || 'ещё не привязано — запустите лаунчер на устройстве';
+          if (pHwidState) pHwidState.textContent = hw ? 'Привязано' : '';
+        } catch(e) { if (pHwid) pHwid.textContent = 'не удалось получить'; }
+        try {
+          var cfgp = await loadConfig();
+          var bot = cfgp && cfgp.bot ? cfgp.bot : 'LanClient0_bot';
+          if (cfgp && cfgp.paywall === true) {
+            if (pPremInfo) pPremInfo.textContent = cfgp.price ? ('Цена: ' + cfgp.price + ' звёзд') : '';
+            var rp = await fetch(RTDB_BASE + '/premium/' + u.uid + '.json?auth=' + encodeURIComponent(token));
+            var pd = rp && rp.ok ? await rp.json() : null;
+            var until = pd && typeof pd.until !== 'undefined' ? Number(pd.until) : NaN;
+            var act = !!pd && (until === 0 || until > Math.floor(Date.now()/1000));
+            if (pPrem) pPrem.textContent = act ? 'Активен ✓' : 'Не оформлен';
+          } else {
+            if (pPrem) pPrem.textContent = 'Клиент бесплатный';
+            if (pPremInfo) pPremInfo.textContent = 'Платный режим выключен';
+          }
+        } catch(e) { if (pPrem) pPrem.textContent = 'не удалось проверить'; }
+      } else {
+        if (pUid) pUid.textContent = '—';
+        if (pHwid) pHwid.textContent = '—';
+        if (pHwidState) pHwidState.textContent = '';
+        if (pPrem) pPrem.textContent = '—';
+        if (pPremInfo) pPremInfo.textContent = '';
+      }
+    } catch(e) {}
+  }
+  function loadConfig() {
+    if (window.__RTDB_CFG) return Promise.resolve(window.__RTDB_CFG);
+    return fetch(RTDB_BASE + '/config.json').then(r=>r&&r.ok?r.json():null).then(c=>{window.__RTDB_CFG=c||{};return window.__RTDB_CFG}).catch(()=>{window.__RTDB_CFG={};return {}});
   }
 
   function switchTab(name) {
@@ -181,6 +249,8 @@
     nickMsg('');
     nickModal.hidden = false;
     document.body.classList.add('modal-open');
+    loadDevice(u);
+    loadPremium(u);
     if (nickInput) { try { nickInput.focus(); } catch (e) {} }
   }
 
@@ -208,10 +278,112 @@
       .catch(function (e) { nickMsg(ruError(e), 'err'); });
   }
 
+  // --- устройство (привязка HWID), только просмотр ---
+  function loadDevice(user) {
+    if (!deviceHwid) return;
+    if (!user) {
+      deviceHwid.textContent = '—';
+      deviceHwid.className = 'device-hwid pending';
+      return;
+    }
+
+    deviceHwid.textContent = 'Загружаю…';
+    deviceHwid.className = 'device-hwid pending';
+
+    user.getIdToken()
+      .then(function (token) {
+        return fetch(RTDB_BASE + '/users/' + user.uid + '.json?auth=' + encodeURIComponent(token));
+      })
+      .then(function (r) { return r && r.ok ? r.json() : null; })
+      .then(function (data) {
+        var hwid = data && data.hwid ? String(data.hwid) : '';
+        if (hwid) {
+          deviceHwid.textContent = hwid;
+          deviceHwid.className = 'device-hwid';
+        } else {
+          deviceHwid.textContent = 'ещё не привязано — запустите лаунчер на устройстве';
+          deviceHwid.className = 'device-hwid pending';
+        }
+      })
+      .catch(function () {
+        deviceHwid.textContent = 'не удалось получить данные';
+        deviceHwid.className = 'device-hwid pending';
+      });
+  }
+
+  // --- доступ (платный режим: config/paywall + premium/<uid>) ---
+  function loadConfig() {
+    if (RTDB_CONFIG) return Promise.resolve(RTDB_CONFIG);
+    return fetch(RTDB_BASE + '/config.json')
+      .then(function (r) { return r && r.ok ? r.json() : null; })
+      .then(function (c) { RTDB_CONFIG = c || {}; return RTDB_CONFIG; })
+      .catch(function () { RTDB_CONFIG = {}; return RTDB_CONFIG; });
+  }
+
+  function loadPremium(user) {
+    if (!premiumStatus) return;
+    premiumBuy.style.display = 'none';
+    premiumBuy.href = '#';
+
+    if (!user) {
+      premiumStatus.textContent = '—';
+      premiumStatus.className = 'premium-status';
+      return;
+    }
+
+    premiumStatus.textContent = 'Проверяю…';
+    premiumStatus.className = 'premium-status';
+
+    Promise.all([loadConfig(), user.getIdToken()])
+      .then(function (res) {
+        var cfg = res[0] || {};
+        var token = res[1];
+        var bot = cfg.bot || 'LanClient0_bot';
+
+        if (cfg.paywall !== true) {
+          premiumStatus.textContent = 'Клиент бесплатный';
+          premiumStatus.className = 'premium-status ok';
+          premiumHint.textContent = 'Платный режим выключен.';
+          return null;
+        }
+
+        premiumBuy.href = 'https://t.me/' + bot + '?start=' + user.uid;
+        premiumBuy.style.display = '';
+        if (cfg.price) {
+          premiumHint.textContent = 'Цена: ' + cfg.price + ' звёзд Telegram. Доступ активируется автоматически.';
+        }
+
+        return fetch(RTDB_BASE + '/premium/' + user.uid + '.json?auth=' + encodeURIComponent(token))
+          .then(function (r) { return r && r.ok ? r.json() : null; });
+      })
+      .then(function (data) {
+        if (data === null) return; // платный режим выключен
+        var until = data && typeof data.until !== 'undefined' ? Number(data.until) : NaN;
+        var active = !!data && (until === 0 || until > Math.floor(Date.now() / 1000));
+        if (active) {
+          premiumStatus.textContent = 'Активен ✓';
+          premiumStatus.className = 'premium-status ok';
+        } else {
+          premiumStatus.textContent = 'Не оформлен';
+          premiumStatus.className = 'premium-status none';
+        }
+      })
+      .catch(function () {
+        premiumStatus.textContent = 'не удалось проверить';
+        premiumStatus.className = 'premium-status';
+      });
+  }
+
   // --- инициализация ---
   window.LanClientAuth.openModal = openModal;
   if (openBtn) openBtn.addEventListener('click', function () { openModal(); });
   if (logoutBtn) logoutBtn.addEventListener('click', doLogout);
+  if (profileBtn) profileBtn.addEventListener('click', openProfile);
+  var pc = $('pCopyUid');
+  if (pc) pc.addEventListener('click', function(){ var v=$('pUid'); if(v&&v.textContent&&v.textContent!=='—') { try{navigator.clipboard.writeText(v.textContent); showMsg('UID скопирован','ok');}catch(e){alert(v.textContent);} } });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-close-profile]'), function (el) {
+    el.addEventListener('click', closeProfile);
+  });
   if (nickBtn) nickBtn.addEventListener('click', openNickModal);
   if (nickSave) nickSave.addEventListener('click', doSaveNick);
   if (nickInput) nickInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') doSaveNick(); });

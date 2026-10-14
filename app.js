@@ -63,11 +63,11 @@
   var heroOs = document.getElementById('hero-os');
   var heroSize = document.getElementById('hero-size');
   if (isAndroid) {
-    if (note) note.textContent = 'Версия 1.2 · Android 7.0+ · ~17 МБ (APK)';
+    if (note) note.textContent = 'Версия 1.3 · Android 7.0+ · ~17 МБ (APK)';
     if (heroOs) heroOs.textContent = 'Android 7.0+';
     if (heroSize) heroSize.textContent = '~17 МБ';
   } else if (!isWindows) {
-    if (note) note.textContent = 'Версия 1.2 · Windows 10/11 (.exe) или Android (.apk)';
+    if (note) note.textContent = 'Версия 1.3 · Windows 10/11 (.exe) или Android (.apk)';
   }
 
   // --- Скачивание только после входа/регистрации ---

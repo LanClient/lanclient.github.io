@@ -437,3 +437,13 @@ body.modal-open { overflow: hidden; }
   .user-name { max-width: 84px; }
   .nav-actions { gap: 8px; }
 }
+
+/* Блок «Устройство» в окне ника (привязка HWID) */
+.device-box { margin-top: 18px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--ghost); }
+.device-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
+.device-hwid { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--text); word-break: break-all; }
+.device-hwid.pending { color: var(--muted); font-family: inherit; }
+.device-hint { margin-top: 6px; font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+.premium-status { font-size: 14px; font-weight: 600; color: var(--text); }
+.premium-status.ok { color: #7DE0A6; }
+.premium-status.none { color: #FF8F8F; }

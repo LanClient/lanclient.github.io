@@ -1,15 +1,14 @@
 // Настройки Firebase для авторизации LanClient.
-//
-// ВАЖНО: замените значения на свои из консоли Firebase:
-//   Project settings (шестерёнка) -> General -> Your apps -> Web app -> SDK setup and configuration -> Config
+// Проект: lanclient-26e2d
 //
 // Эти значения НЕ секретные (их можно публиковать на сайте),
 // защита обеспечивается правилами Firebase и Authorized domains.
 window.LANCLIENT_FIREBASE_CONFIG = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_PROJECT.firebaseapp.com",
-  projectId: "PASTE_PROJECT",
-  storageBucket: "PASTE_PROJECT.appspot.com",
-  messagingSenderId: "PASTE_SENDER_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyAL7x0hfXFQXU0xL9zKnFYPoHmDOq_DPjw",
+  authDomain: "lanclient-26e2d.firebaseapp.com",
+  projectId: "lanclient-26e2d",
+  storageBucket: "lanclient-26e2d.firebasestorage.app",
+  messagingSenderId: "946361498127",
+  appId: "1:946361498127:web:993baaab3f5b81d4c2017a",
+  measurementId: "G-VLRJPGCZYP"
 };

@@ -13,6 +13,11 @@
   var userNameEl = document.getElementById('userName');
   var userAvatar = document.getElementById('userAvatar');
   var logoutBtn  = document.getElementById('authLogout');
+  var nickModal  = document.getElementById('nickModal');
+  var nickBtn    = document.getElementById('nickChange');
+  var nickInput  = document.getElementById('nickInput');
+  var nickSave   = document.getElementById('nickSave');
+  var nickMsgEl  = document.getElementById('nickMsg');
 
   var auth = null;
 
@@ -161,10 +166,60 @@
     auth.signOut().then(function () { showMsg('Вы вышли.', 'ok'); }).catch(function (e) { showMsg(ruError(e), 'err'); });
   }
 
+  // --- ник задаётся и меняется только на сайте ---
+  function nickMsg(text, kind) {
+    if (!nickMsgEl) return;
+    nickMsgEl.textContent = text || '';
+    nickMsgEl.className = 'auth-msg' + (kind ? ' ' + kind : '');
+  }
+
+  function openNickModal() {
+    var u = auth && auth.currentUser;
+    if (!u) { openModal(); return; }
+    if (!nickModal) return;
+    if (nickInput) nickInput.value = u.displayName || (u.email || '').split('@')[0];
+    nickMsg('');
+    nickModal.hidden = false;
+    document.body.classList.add('modal-open');
+    if (nickInput) { try { nickInput.focus(); } catch (e) {} }
+  }
+
+  function closeNickModal() {
+    if (!nickModal) return;
+    nickModal.hidden = true;
+    document.body.classList.remove('modal-open');
+    nickMsg('');
+  }
+
+  function doSaveNick() {
+    if (needConfig()) return;
+    var u = auth && auth.currentUser;
+    if (!u) { closeNickModal(); openModal(); return; }
+    var nick = nickInput ? nickInput.value.trim() : '';
+    if (!validNick(nick)) return nickMsg('Ник: 3–16 символов, латиница, цифры и «_».', 'err');
+    if (nick === (u.displayName || '')) return nickMsg('Это ваш текущий ник.', 'ok');
+    nickMsg('Сохраняю…');
+    u.updateProfile({ displayName: nick })
+      .then(function () { return u.reload(); })
+      .then(function () {
+        renderUser(auth.currentUser);
+        nickMsg('Ник сохранён: ' + nick, 'ok');
+      })
+      .catch(function (e) { nickMsg(ruError(e), 'err'); });
+  }
+
   // --- инициализация ---
   window.LanClientAuth.openModal = openModal;
   if (openBtn) openBtn.addEventListener('click', function () { openModal(); });
   if (logoutBtn) logoutBtn.addEventListener('click', doLogout);
+  if (nickBtn) nickBtn.addEventListener('click', openNickModal);
+  if (nickSave) nickSave.addEventListener('click', doSaveNick);
+  if (nickInput) nickInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') doSaveNick(); });
+  if (nickModal) {
+    Array.prototype.forEach.call(nickModal.querySelectorAll('[data-close]'), function (el) {
+      el.addEventListener('click', closeNickModal);
+    });
+  }
   if (modal) {
     Array.prototype.forEach.call(modal.querySelectorAll('[data-close]'), function (el) {
       el.addEventListener('click', closeModal);
@@ -173,7 +228,11 @@
   Array.prototype.forEach.call(document.querySelectorAll('.auth-tab'), function (t) {
     t.addEventListener('click', function () { switchTab(t.getAttribute('data-tab')); });
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal && !modal.hidden) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (modal && !modal.hidden) closeModal();
+    if (nickModal && !nickModal.hidden) closeNickModal();
+  });
 
   var bLogin = $('btnLogin');     if (bLogin) bLogin.addEventListener('click', doLogin);
   var bReg   = $('btnRegister');  if (bReg) bReg.addEventListener('click', doRegister);

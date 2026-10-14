@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/icon.png">
 <link rel="alternate icon" href="assets/app.ico">
-<link rel="stylesheet" href="styles.css?v=20261014015232">
+<link rel="stylesheet" href="styles.css?v=20261014021506">
 </head>
 <body>
 
@@ -40,6 +40,7 @@
       <div class="user-chip" id="userChip" hidden>
         <img class="user-avatar" id="userAvatar" alt="">
         <span class="user-name" id="userName"></span>
+        <button class="user-logout" id="nickChange" type="button" title="Сменить ник">Ник</button>
         <button class="user-logout" id="authLogout" type="button">Выйти</button>
       </div>
       <button class="burger" id="burger" aria-label="Меню">
@@ -489,10 +490,27 @@
   </div>
 </div>
 
-<script src="firebase-config.js?v=20261014015232"></script>
+<!-- Модальное окно смены ника (ник задаётся только на сайте) -->
+<div class="modal" id="nickModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Ник LanClient">
+    <button class="modal-close" type="button" data-close aria-label="Закрыть">&times;</button>
+    <h3 style="margin:0 0 14px;font-size:18px">Ник для Minecraft</h3>
+    <div class="auth-pane">
+      <label class="auth-field">
+        <span>Ник (3–16 символов: латиница, цифры и «_»)</span>
+        <input type="text" id="nickInput" maxlength="16" autocomplete="username" placeholder="Steve_123">
+      </label>
+      <button class="btn btn-primary" type="button" id="nickSave">Сохранить</button>
+    </div>
+    <div class="auth-msg" id="nickMsg"></div>
+  </div>
+</div>
+
+<script src="firebase-config.js?v=20261014021506"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="auth.js?v=20261014015232"></script>
-<script src="app.js?v=20261014015232"></script>
+<script src="auth.js?v=20261014021506"></script>
+<script src="app.js?v=20261014021506"></script>
 </body>
 </html>

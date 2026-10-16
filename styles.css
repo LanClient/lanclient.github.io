@@ -1,6 +1,6 @@
 /* ============================================================
-   LanClient â€” lanclient.ru
-   ÐŸÐ°Ð»Ð¸Ñ‚Ñ€Ð° Ð²Ð·ÑÑ‚Ð° Ð¸Ð· Ð»Ð¾Ð°Ð´ÐµÑ€Ð° LanClient (src/Ui.cs)
+   LanClient — lanclient.ru
+   Палитра взята из лоадера LanClient (src/Ui.cs)
    ============================================================ */
 
 :root {
@@ -55,7 +55,7 @@ p { margin: 0; }
 }
 
 /* ---------- Buttons ---------- */
-/* [hidden] Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð¿Ð¾Ð±ÐµÐ¶Ð´Ð°Ñ‚ÑŒ display Ñƒ .btn Ð¸ Ð¿Ñ€Ð¾Ñ‡Ð¸Ñ… */
+/* [hidden] должно побеждать display у .btn и прочих */
 [hidden] { display: none !important; }
 
 .btn {
@@ -385,7 +385,7 @@ p { margin: 0; }
   .reveal { opacity: 1; transform: none; }
 }
 
-/* ---------- ÐÐ²Ñ‚Ð¾Ñ€Ð¸Ð·Ð°Ñ†Ð¸Ñ ---------- */
+/* ---------- Авторизация ---------- */
 .modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; }
 .modal[hidden] { display: none; }
 .modal-backdrop { position: absolute; inset: 0; background: rgba(4, 10, 7, .74); backdrop-filter: blur(5px); }
@@ -438,7 +438,7 @@ body.modal-open { overflow: hidden; }
   .nav-actions { gap: 8px; }
 }
 
-/* Ð‘Ð»Ð¾Ðº Â«Ð£ÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð¾Â» Ð² Ð¾ÐºÐ½Ðµ Ð½Ð¸ÐºÐ° (Ð¿Ñ€Ð¸Ð²ÑÐ·ÐºÐ° HWID) */
+/* Блок «Устройство» в окне ника (привязка HWID) */
 .device-box { margin-top: 18px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--ghost); }
 .device-title { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
 .device-hwid { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--text); word-break: break-all; }
